@@ -1,14 +1,48 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import "./index.css";
+import Home from "./pages/Home/Home";
 import reportWebVitals from './reportWebVitals';
+import Products,
+{
+  loader as productsLoader
+}from "./components/Products/Products";
+import Product,
+{
+  loader as productLoader
+} from "./pages/Product/Product";
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home/>,
+    children: [
+      {
+        path: "products/",
+        element: <Products/>,
+        loader: productsLoader,
+      }
+    ],
+  },
+  {
+    path: "/products/:productId",
+    element: <Product/>,
+    loader: productLoader
+  }
+]);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
