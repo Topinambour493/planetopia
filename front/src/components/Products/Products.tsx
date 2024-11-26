@@ -1,32 +1,31 @@
 import React from 'react';
 import {ProductType} from "../../types/types";
 import {NavLink, useLoaderData, useNavigation} from "react-router-dom";
+import "./products.css"
 
-export async function loader() {
-  const response = await fetch("http://127.0.0.1:8000/api/products/");
+export async function loader({request}: {request: Request}){
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q") || "";
+  const response = await fetch("http://127.0.0.1:8000/api/products/")
   if (!response.ok) {
     throw new Error(`Error: ${response.status} ${response.statusText}`);
   }
-  return await response.json()
+  return  { products: await response.json(), q}
 }
 
-
-export default function Products() {
-  let {products} = useLoaderData() as {products: ProductType[]};
+export default function Products({products}: {products: ProductType[]}) {
   const navigation = useNavigation();
 
-  console.log(products)
   return (
-    <>
-      <div>Products</div>
+    <div id={"products"} className={"flex-container"}>
+      <h2>Produits</h2>
       <ul>
         {products && products.length > 0 ? (
-          products.map((product: ProductType)=>{
+          products.map((product: ProductType) => {
             return (
               <li key={product.id}>
-                <NavLink to={"/products/"+product.id}>
-                  {product.name}
-                  <img src={"http://localhost:8000" + product.image} width={"100px"} height={"100px"}/>
+                <NavLink to={"/products/" + product.id}>
+                  <img src={"http://localhost:8000" + product.image} className={"image-products"}/>
                 </NavLink>
               </li>
             )
@@ -35,7 +34,8 @@ export default function Products() {
           <li>Aucun produit disponible</li>
         )}
       </ul>
-    </>
+    </div>
   )
-  ;
+    ;
 }
+

@@ -6,29 +6,22 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
-import Home from "./pages/Home/Home";
 import reportWebVitals from './reportWebVitals';
-import Products,
-{
+import {
   loader as productsLoader
 }from "./components/Products/Products";
 import Product,
 {
   loader as productLoader
 } from "./pages/Product/Product";
+import Home from "./pages/Home/Home";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home/>,
-    children: [
-      {
-        path: "products/",
-        element: <Products/>,
-        loader: productsLoader,
-      }
-    ],
+    loader: productsLoader,
   },
   {
     path: "/products/:productId",

@@ -2,10 +2,10 @@ from django.contrib.auth.models import User
 from django.db import models
 
 class Category(models.TextChoices):
-        STAR = 'star'
-        PLANET = 'planet'
+        STAR = 'étoile'
+        PLANET = 'planète'
         SATELLITE = 'satellite'
-        ASTEROID = 'asteroid'
+        ASTEROID = 'asteroïde'
 
 class Product(models.Model):
     name = models.CharField(max_length=200, default="", blank=False)
