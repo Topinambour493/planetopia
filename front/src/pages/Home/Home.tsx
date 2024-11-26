@@ -24,7 +24,7 @@ export async function loader({request}: {request: Request}){
     throw new Error(`Error: ${response.status} ${response.statusText}`);
   }
   let { products }= response.data
-  return  {products, q}
+  return  {products, q, category}
 }
 
 export default function Home() {

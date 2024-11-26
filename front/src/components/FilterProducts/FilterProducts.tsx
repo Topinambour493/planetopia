@@ -36,7 +36,8 @@ export default function FilterProducts({ q, category }: {q:string, category: str
   const options = [
     { value: 'étoile', label: 'étoile' },
     { value: 'satellite', label: 'satellite' },
-    {value: 'planète', label: 'planète'}
+    {value: 'planète', label: 'planète'},
+    {value: 'asteroïde', label: 'asteroïde'}
   ]
 
   return (
@@ -47,6 +48,7 @@ export default function FilterProducts({ q, category }: {q:string, category: str
           options={options}
           id="selectCategory"
           onChange={handleCategoryChange}
+          defaultValue={options.find(option => option.value === category)}
         />
         <input
           id="q"

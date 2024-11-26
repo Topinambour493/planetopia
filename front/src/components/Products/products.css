@@ -1,6 +1,7 @@
 #products{
     margin: 20px;
     flex-wrap: wrap;
+    min-height: 100vh;
 }
 
 #products .image-products{
