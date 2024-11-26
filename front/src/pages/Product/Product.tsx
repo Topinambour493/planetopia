@@ -2,13 +2,15 @@ import React from 'react';
 import {ProductType} from "../../types/types";
 import {LoaderFunctionArgs, useLoaderData} from "react-router-dom";
 import "./Product.css"
+import axios from "axios";
 
 export async function loader({ params } : LoaderFunctionArgs) {
-  const response = await fetch("http://127.0.0.1:8000/api/products/" + params.productId + "/");
-  if (!response.ok) {
+  const response = await axios.get("http://127.0.0.1:8000/api/products/" + params.productId + "/");
+  console.log("response",response)
+  if (response.status !== 200) {
     throw new Error(`Error: ${response.status} ${response.statusText}`);
   }
-  return  await response.json()
+  return  response.data
 }
 
 export default function Product() {

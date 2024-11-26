@@ -1,14 +1,53 @@
 import "./FilterProducts.css"
 
-import React from 'react';
-import {Form, useSubmit} from "react-router-dom";
+import React, {useState} from 'react';
+import {Form, SubmitTarget, useSubmit} from "react-router-dom";
+import Select from "react-select"
 
-export default function FilterProducts({ q }: {q:string}) {
+
+
+export default function FilterProducts({ q, category }: {q:string, category: string}) {
   const submit = useSubmit();
+  const [selectedCategories, setSelectedCategories] = useState<string>(category || "");
+
+
+
+  const handleCategoryChange = (selectedOptions: any) => {
+    setSelectedCategories(selectedOptions.value);
+
+    // Mettre à jour le formulaire avec les nouvelles valeurs et soumettre
+    submit(
+      {
+        category: selectedOptions.value, // Transforme en chaîne séparée par des virgules
+        q: q || "", // Inclure la recherche si présente
+      },
+      { method: "get", replace: true }
+    );
+  };
+
+  function handleSubmit(){
+    const isFirstSearch = q == null;
+    console.log(document.getElementById('products-form') as SubmitTarget)
+    submit(document.getElementById('products-form') as SubmitTarget, {
+      replace: !isFirstSearch,
+    })
+  }
+
+  const options = [
+    { value: 'étoile', label: 'étoile' },
+    { value: 'satellite', label: 'satellite' },
+    {value: 'planète', label: 'planète'}
+  ]
 
   return (
     <div id={"filter-products"}>
-      <Form id="search-form" role="search" method={"get"}>
+      <Form id="products-form" role="search" method={"get"}>
+        <Select
+          name={"category"}
+          options={options}
+          id="selectCategory"
+          onChange={handleCategoryChange}
+        />
         <input
           id="q"
           aria-label="Search"
@@ -16,17 +55,8 @@ export default function FilterProducts({ q }: {q:string}) {
           type="search"
           name="q"
           defaultValue={q}
-          onChange={(event) => {
-            const isFirstSearch = q == null;
-            submit(event.currentTarget.form, {
-              replace: !isFirstSearch,
-            })
-          }}
+          onChange={handleSubmit}
         />
-        <div
-          className="sr-only"
-          aria-live="polite"
-        ></div>
       </Form>
     </div>
   );

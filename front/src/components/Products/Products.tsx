@@ -3,18 +3,11 @@ import {ProductType} from "../../types/types";
 import {NavLink, useLoaderData, useNavigation} from "react-router-dom";
 import "./products.css"
 
-export async function loader({request}: {request: Request}){
-  const url = new URL(request.url);
-  const q = url.searchParams.get("q") || "";
-  const response = await fetch("http://127.0.0.1:8000/api/products/")
-  if (!response.ok) {
-    throw new Error(`Error: ${response.status} ${response.statusText}`);
-  }
-  return  { products: await response.json(), q}
-}
 
 export default function Products({products}: {products: ProductType[]}) {
   const navigation = useNavigation();
+
+  console.log({products})
 
   return (
     <div id={"products"} className={"flex-container"}>

@@ -2,3 +2,16 @@
     display: flex;
     justify-content: center;
 }
+
+#selectCategory{
+    color: black;
+}
+
+#products-form{
+    display: flex;
+    flex-direction: row;
+}
+
+#products-form > * {
+    margin: 10px;
+}
