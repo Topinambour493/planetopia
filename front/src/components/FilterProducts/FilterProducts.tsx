@@ -34,6 +34,7 @@ export default function FilterProducts({ q, category }: {q:string, category: str
   }
 
   const options = [
+    {value: '', label: 'toutes les catégories' },
     { value: 'étoile', label: 'étoile' },
     { value: 'satellite', label: 'satellite' },
     {value: 'planète', label: 'planète'},
